@@ -4,19 +4,23 @@ const {ToDo} = require('./../../models/todo')
 const {User} = require('./../../models/users')
 
 
+const userIdOne = new ObjectID();
+const userIdTwo = new ObjectID();
+
 const todosArr = [
     {
         _id: new ObjectID,
-        text: 'I am eating'
+        text: 'I am eating',
+        _creator: userIdTwo
     },
     {
         _id: new ObjectID,
-        text: 'I am sleaping'
+        text: 'I am sleaping',
+        completed: true,
+        completedAt: 333,
+        _creator: userIdTwo
     }
 ]
-
-const userIdOne = new ObjectID();
-const userIdTwo = new ObjectID();
 
 const users = [{
          _id: userIdOne,
@@ -29,7 +33,11 @@ const users = [{
 }, {
       _id: userIdTwo,
       email: 'bcbcb@gmail.com',
-      password: 'UserTwoPass'
+      password: 'UserTwoPass',
+      tokens: [{
+        access : 'auth',
+        token: jwt.sign({_id: userIdOne, access: 'auth'}, 'abc123').toString()
+    }]
 }]
 
 const populateTodos = (done) => {
